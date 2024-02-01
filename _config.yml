@@ -1,6 +1,6 @@
-title: Abhishek Nagekar
-description: Web & Security Engineer
-site_title: '@abhn - Abhishek Nagekar'
+title: Amanze Emeka
+description: DevOps Engineer & Instructor
+site_title: '@abhn - Amanze Emeka'
 
 # Build settings
 markdown: kramdown
@@ -9,7 +9,7 @@ exclude: [vendor/ruby]
 # Personalization
 github_username: abhn
 blog_url: https://www.nagekar.com
-email: abhishek@nagekar.com
+email: amanzeedward@yahoo.com
 keybase_username: abhn
 twitter_username: abhn_
 reddit_username: abhn
