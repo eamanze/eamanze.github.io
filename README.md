@@ -6,7 +6,7 @@ Role: DevOps / Cloud Engineer
 Contact: amanzeedward@gmail.com
 
 How to preview locally
-1. cd /Users/cloudhightadmin/Downloads/projects/ahmedtariq01.github.io
+1. cd /Users/cloudhightadmin/Downloads/projects/eamanze.github.io
 2. python3 -m http.server 8000
 3. Open http://localhost:8000
 
