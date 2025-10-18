@@ -1,101 +1,151 @@
+/**
+* Template Name: Personal - v2.1.0
+* Template URL: https://bootstrapmade.com/personal-free-resume-bootstrap-template/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
+!(function($) {
+  "use strict";
 
-$(document).ready(function() {
-    general_utils();
-    blog_posts();
-})
+  // Nav Menu
+  $(document).on('click', '.nav-menu a, .mobile-nav a', function(e) {
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+      var hash = this.hash;
+      var target = $(hash);
+      if (target.length) {
+        e.preventDefault();
 
-
-function general_utils() {
-    // smooth scrolling for nav links
-    $('.head-menu-wrap a').smoothScroll();
-    $('.extra-link a').smoothScroll();
-    $('.profile-pic-link').smoothScroll();
-
-    $('.skillbar').each(function(){
-		$(this).find('.skillbar-bar').animate({
-			width: $(this).attr('data-percent')
-		}, 1000);
-	});
-}
-
-function blog_posts() {
-
-    // keeping it static, can be fetched from a blog dynamically as well
-    let posts = [
-        {
-            url: 'https://www.nagekar.com/2017/02/trip-to-bramhatal-uttarakhand.html',
-            title: 'Trek To Bramhatal (Uttarakhand)',
-        },
-        {
-            url: 'https://www.nagekar.com/2017/08/privacy.html',
-            title: 'Privacy - How I Converted',
-        },
-        {
-            url: 'https://www.nagekar.com/2018/01/jagriti-yatra.html',
-            title: 'Jagriti Yatra 2017',
-        },
-        {
-            url: 'https://www.nagekar.com/2017/08/private-cloud-part-2.html',
-            title: 'Private Cloud Part 2 | Encrypted Storage With NextCloud',
-        },
-        {
-            url: 'https://www.nagekar.com/2018/07/eli5-how-https-works.html',
-            title: 'ELI5 - How HTTPS Works',
-        },
-    ];
-
-    let post_html = [];
-
-    for(let post of posts) {
-
-        let tags;
-        
-        if(post.tags) {
-            tags = post.tags.map(tag => {
-                return `<a href="https://www.nagekar.com/tags#${tag}">${tag}</a>`
-            })
+        if ($(this).parents('.nav-menu, .mobile-nav').length) {
+          $('.nav-menu .active, .mobile-nav .active').removeClass('active');
+          $(this).closest('li').addClass('active');
         }
 
-        let post_template = `
-        <div class="blog-post" onclick="blog_link_click('${post.url}');">
+        if (hash == '#header') {
+          $('#header').removeClass('header-top');
+          $("section").removeClass('section-show');
+          return;
+        }
 
-            <div class="blog-link">
-    
-                <h3><a href="${post.url}">${post.title}</a></h3>            
+        if (!$('#header').hasClass('header-top')) {
+          $('#header').addClass('header-top');
+          setTimeout(function() {
+            $("section").removeClass('section-show');
+            $(hash).addClass('section-show');
+          }, 350);
+        } else {
+          $("section").removeClass('section-show');
+          $(hash).addClass('section-show');
+        }
 
-            </div>
-    
-            <div class="blog-goto-link">
-                <img class="blog-arrow" src="/assets/images/right-open-mini.svg"/>
-            </div>
-        </div>
-        `;
+        if ($('body').hasClass('mobile-nav-active')) {
+          $('body').removeClass('mobile-nav-active');
+          $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+          $('.mobile-nav-overly').fadeOut();
+        }
 
-        post_html.push(post_template);
+        return false;
+
+      }
     }
+  });
 
-    // for the more posts link
-    let post_template = `
-    <div class="blog-post more-blogs" onclick="blog_link_click('https://www.nagekar.com');">
+  // Activate/show sections on load with hash links
+  if (window.location.hash) {
+    var initial_nav = window.location.hash;
+    if ($(initial_nav).length) {
+      $('#header').addClass('header-top');
+      $('.nav-menu .active, .mobile-nav .active').removeClass('active');
+      $('.nav-menu, .mobile-nav').find('a[href="' + initial_nav + '"]').parent('li').addClass('active');
+      setTimeout(function() {
+        $("section").removeClass('section-show');
+        $(initial_nav).addClass('section-show');
+      }, 350);
+    }
+  }
 
-        <div class="blog-link">
+  // Mobile Navigation
+  if ($('.nav-menu').length) {
+    var $mobile_nav = $('.nav-menu').clone().prop({
+      class: 'mobile-nav d-lg-none'
+    });
+    $('body').append($mobile_nav);
+    $('body').prepend('<button type="button" class="mobile-nav-toggle d-lg-none"><i class="icofont-navigation-menu"></i></button>');
+    $('body').append('<div class="mobile-nav-overly"></div>');
 
-            <h3><a href="https://www.nagekar.com">Visit the blog for more posts</a></h3>            
+    $(document).on('click', '.mobile-nav-toggle', function(e) {
+      $('body').toggleClass('mobile-nav-active');
+      $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+      $('.mobile-nav-overly').toggle();
+    });
 
-        </div>
+    $(document).click(function(e) {
+      var container = $(".mobile-nav, .mobile-nav-toggle");
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+        if ($('body').hasClass('mobile-nav-active')) {
+          $('body').removeClass('mobile-nav-active');
+          $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+          $('.mobile-nav-overly').fadeOut();
+        }
+      }
+    });
+  } else if ($(".mobile-nav, .mobile-nav-toggle").length) {
+    $(".mobile-nav, .mobile-nav-toggle").hide();
+  }
 
-        <div class="blog-goto-link">
-            <img class="blog-arrow" src="/assets/images/right-open-mini.svg"/>
-        </div>
-    </div>
-    `;
+  // jQuery counterUp
+  $('[data-toggle="counter-up"]').counterUp({
+    delay: 10,
+    time: 1000
+  });
 
-    post_html.push(post_template);
+  // Skills section
+  $('.skills-content').waypoint(function() {
+    $('.progress .progress-bar').each(function() {
+      $(this).css("width", $(this).attr("aria-valuenow") + '%');
+    });
+  }, {
+    offset: '80%'
+  });
 
-    $('#rss-feeds').html(post_html);
+  // Testimonials carousel (uses the Owl Carousel library)
+  $(".testimonials-carousel").owlCarousel({
+    autoplay: true,
+    dots: true,
+    loop: true,
+    responsive: {
+      0: {
+        items: 1
+      },
+      768: {
+        items: 2
+      },
+      900: {
+        items: 3
+      }
+    }
+  });
 
-}
+  // Porfolio isotope and filter
+  $(window).on('load', function() {
+    var portfolioIsotope = $('.portfolio-container').isotope({
+      itemSelector: '.portfolio-item',
+      layoutMode: 'fitRows'
+    });
 
-function blog_link_click(url) {
-    window.location = url;
-}
+    $('#portfolio-flters li').on('click', function() {
+      $("#portfolio-flters li").removeClass('filter-active');
+      $(this).addClass('filter-active');
+
+      portfolioIsotope.isotope({
+        filter: $(this).data('filter')
+      });
+    });
+
+  });
+
+  // Initiate venobox (lightbox feature used in portofilo)
+  $(document).ready(function() {
+    $('.venobox').venobox();
+  });
+
+})(jQuery);
