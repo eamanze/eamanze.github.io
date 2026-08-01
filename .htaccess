@@ -1,4 +1,0 @@
-DirectoryIndex index.html
-RewriteEngine On
-RewriteCond %{THE_REQUEST} /index\.(html|php) [NC]
-RewriteRule ^(.*)index\.(html|php)$ /$1 [R=301,L]
