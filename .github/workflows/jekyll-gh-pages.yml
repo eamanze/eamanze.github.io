@@ -1,33 +1,51 @@
+name: Deploy Vite site to GitHub Pages
+
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
-  id-token: write 
-  contents: write 
-  pages: write    
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 18 
+          bun-version: latest
 
-      - name: Vite GitHub Pages Deployer
-        uses: skywarth/vite-github-pages-deployer@v1.5.0
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build website
+        run: bun run build
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          public_base_path: /  # This is the base
-          build_path: ./dist
-          install_phase_node_env: dev
-          build_phase_node_env: production
-          package_manager: npm
-          artifact_name: github-pages
-          debug_mode: false
-          working_path: ./
+          path: ./dist
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
