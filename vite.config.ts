@@ -1,20 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { fileURLToPath, URL } from "node:url";
+import tailwindcss from "@tailwindcss/vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  server: {
-    host: "::",
-    port: 8080,
-  },
-
-  plugins: [react()],
-
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
-    },
-  },
+  plugins: [
+    react(),
+    tailwindcss(),
+    tsconfigPaths(),
+  ],
 
   base: "/",
 });
