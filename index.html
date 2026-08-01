@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" class="dark" style="color-scheme: dark">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="description"
+      content="Portfolio of Emeka Edward Amanze, a DevOps, DevSecOps, SRE and AWS Cloud Engineer based in Lagos, Nigeria."
+    />
+
+    <meta name="author" content="Emeka Edward Amanze" />
+
+    <title>
+      Emeka Edward Amanze | DevOps, DevSecOps, SRE and AWS Cloud Engineer
+    </title>
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      try {
+        const theme =
+          localStorage.getItem("emeka-theme") || "dark";
+
+        document.documentElement.classList.toggle(
+          "dark",
+          theme === "dark"
+        );
+
+        document.documentElement.classList.toggle(
+          "light",
+          theme === "light"
+        );
+
+        document.documentElement.style.colorScheme = theme;
+      } catch (error) {
+        console.error("Unable to apply stored theme:", error);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
